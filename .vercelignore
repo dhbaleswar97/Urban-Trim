@@ -1,0 +1,3 @@
+# Large media assets exceed Vercel's 100 MB source-file limit.
+# Host these on a CDN (Vercel Blob, Cloudinary, S3, etc.) for production.
+public/assets/
