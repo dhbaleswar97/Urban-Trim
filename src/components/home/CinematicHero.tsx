@@ -37,7 +37,7 @@ const H = '/assets/images/Hero-Text-Hover%20Image'
 const TRAIL_IMAGES = [
   `${H}/U-letter.png`,
   `${H}/Glossy-R.png`,
-  `${H}/Head-1.png`,
+  `${H}/Zozo%20Head-1.png`,
   `${H}/A%20Baloon%20text.png`,
   `${H}/N%20Baloon%20text.png`,
   `${H}/Glossy-T.png`,
@@ -61,7 +61,7 @@ type CharConfig = {
 const URBAN_CHARS: CharConfig[] = [
   { char: 'U', img: `${H}/U-letter.png`, w: '0.70em', h: '0.80em' },
   { char: 'r', img: `${H}/Glossy-R.png` },
-  { char: 'b', img: `${H}/Head-1.png` },
+  { char: 'b', img: `${H}/Zozo%20Head-1.png` },
   { char: 'a', img: `${H}/A%20Baloon%20text.png` },
   { char: 'n', img: `${H}/N%20Baloon%20text.png`, w: '1.20em' },
 ]
@@ -221,6 +221,7 @@ function HeroChar({
 export function CinematicHero() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const heroPanelRef = useRef<HTMLDivElement>(null)
+  const trailZoneRef = useRef<HTMLDivElement>(null)
   const colInnerRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
@@ -304,13 +305,11 @@ export function CinematicHero() {
           className="absolute inset-0 z-10 origin-center bg-white"
           style={{ willChange: 'transform' }}
         >
-          {/* ── Ambient image trail — z-[1], behind all content ── */}
-          <ImageTrail images={TRAIL_IMAGES} containerRef={heroPanelRef} />
-
           {/* ── Hero content — z-[2], always above trail ── */}
           <div className="relative z-[2] flex h-full flex-col">
-            {/* Header row: sidebar + tagline */}
-            <div className="flex flex-1 pt-[72px]">
+            {/* Header row: sidebar + tagline — trail active only here */}
+            <div ref={trailZoneRef} className="relative flex flex-1 pt-[72px]">
+              <ImageTrail images={TRAIL_IMAGES} containerRef={trailZoneRef} />
               {/* Left — service list */}
               <motion.aside
                 className="hidden shrink-0 flex-col justify-start pt-10 md:flex"
