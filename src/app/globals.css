@@ -1,0 +1,502 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ══════════════════════════════════════════
+   URBAN TRIM — Design System
+   Primary: #B6F500 Lime · BG: #FFFFFF · Text: #000000
+══════════════════════════════════════════ */
+
+@theme inline {
+  /* Brand palette */
+  --color-ut-lime: #b6f500;
+  --color-ut-green: #08cb00;
+  --color-ut-red: #fb4141;
+  --color-ut-orange: #ff9b2f;
+  --color-ut-lgreen: #78c841;
+  --color-ut-black: #000000;
+  --color-ut-white: #ffffff;
+  --color-ut-50: #fafafa;
+  --color-ut-100: #f5f5f5;
+  --color-ut-200: #e8e8e8;
+  --color-ut-300: #d0d0d0;
+  --color-ut-400: #a0a0a0;
+  --color-ut-600: #555555;
+  --color-ut-800: #222222;
+  --color-ut-900: #111111;
+
+  /* Typography */
+  --font-display: var(--font-csaloise), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+
+  /* Shadcn overrides */
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-primary: #b6f500;
+  --color-primary-foreground: #000000;
+  --color-secondary: #f5f5f5;
+  --color-secondary-foreground: #000000;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #555555;
+  --color-accent: #b6f500;
+  --color-accent-foreground: #000000;
+  --color-border: #e8e8e8;
+  --color-ring: #b6f500;
+  --color-card: #ffffff;
+  --color-card-foreground: #000000;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #000000;
+  --color-destructive: #fb4141;
+  --color-input: #e8e8e8;
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #b6f500;
+  --primary-foreground: #000000;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #000000;
+  --muted: #f5f5f5;
+  --muted-foreground: #555555;
+  --accent: #b6f500;
+  --accent-foreground: #000000;
+  --destructive: #fb4141;
+  --border: #e8e8e8;
+  --input: #e8e8e8;
+  --ring: #b6f500;
+  --radius: 2px;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #b6f500;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: #e8e8e8;
+  --sidebar-ring: #b6f500;
+}
+
+/* ─── Base ─── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto; /* Lenis handles this */
+    cursor: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #b6f500;
+    color: #000000;
+  }
+
+  :focus-visible {
+    outline: 2px solid #b6f500;
+    outline-offset: 3px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #fff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #b6f500;
+  }
+}
+
+/* ─── Typography Utilities ─── */
+.font-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+.font-body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* ─── Grain overlay (very subtle on white) ─── */
+@keyframes grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-3%, -6%);
+  }
+  30% {
+    transform: translate(4%, -20%);
+  }
+  50% {
+    transform: translate(-10%, 6%);
+  }
+  70% {
+    transform: translate(0%, 12%);
+  }
+  90% {
+    transform: translate(-6%, 6%);
+  }
+}
+.grain-overlay {
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  pointer-events: none;
+  z-index: 998;
+  opacity: 0.015;
+  animation: grain 8s steps(10, end) infinite;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─── Marquee ─── */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.marquee-track {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  animation: marquee-left var(--duration, 28s) linear infinite;
+}
+.marquee-content.reverse {
+  animation-direction: reverse;
+}
+.marquee-track:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+/* ─── UT Button ─── */
+.ut-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  border-radius: 1px;
+  cursor: none;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 0.35s ease;
+  white-space: nowrap;
+}
+.ut-btn-primary {
+  background: #ffffff;
+  border: 1px solid #b6f500;
+  color: #000000;
+  padding: 14px 32px;
+}
+.ut-btn-dark {
+  background: #000000;
+  border: 1px solid #000000;
+  color: #ffffff;
+  padding: 14px 32px;
+}
+.ut-btn-lime {
+  background: #b6f500;
+  border: 1px solid #b6f500;
+  color: #000000;
+  padding: 14px 32px;
+}
+.ut-btn-outline {
+  background: transparent;
+  border: 1px solid #000000;
+  color: #000000;
+  padding: 14px 32px;
+}
+.ut-btn-sm {
+  padding: 10px 22px;
+  font-size: 10px;
+}
+.ut-btn-lg {
+  padding: 17px 42px;
+  font-size: 12px;
+}
+
+/* Fill element */
+.ut-btn-fill {
+  position: absolute;
+  inset: 0;
+  transform: translateY(101%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+.ut-btn:hover .ut-btn-fill {
+  transform: translateY(0);
+}
+.ut-btn-primary .ut-btn-fill {
+  background: #000000;
+}
+.ut-btn-dark .ut-btn-fill {
+  background: #b6f500;
+}
+.ut-btn-lime .ut-btn-fill {
+  background: #000000;
+}
+.ut-btn-outline .ut-btn-fill {
+  background: #000000;
+}
+
+/* Text span */
+.ut-btn-text {
+  position: relative;
+  z-index: 1;
+  transition: color 0.35s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ut-btn-primary:hover .ut-btn-text {
+  color: #ffffff;
+}
+.ut-btn-dark:hover .ut-btn-text {
+  color: #000000;
+}
+.ut-btn-lime:hover .ut-btn-text {
+  color: #ffffff;
+}
+.ut-btn-outline:hover .ut-btn-text {
+  color: #ffffff;
+}
+
+/* ─── Split text ─── */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.split-word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+/* ─── Image reveal ─── */
+.img-reveal-wrap {
+  overflow: hidden;
+}
+.img-reveal-inner {
+  transform: scale(1.1);
+}
+
+/* ─── Section padding ─── */
+.section-pad {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+@media (min-width: 1024px) {
+  .section-pad {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+@media (min-width: 1280px) {
+  .section-pad {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+  }
+}
+
+/* ─── Hover underline link ─── */
+.link-hover {
+  position: relative;
+  display: inline-block;
+}
+.link-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-hover:hover::after {
+  width: 100%;
+}
+
+/* ─── Nav link ─── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #b6f500;
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ─── Cursor hide on mobile ─── */
+@media (max-width: 768px) {
+  html {
+    cursor: auto;
+  }
+  .custom-cursor-el {
+    display: none !important;
+  }
+}
+
+/* ─── Before/After slider ─── */
+.ba-slider {
+  position: relative;
+  overflow: hidden;
+  cursor: ew-resize;
+  user-select: none;
+}
+.ba-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #b6f500;
+  z-index: 10;
+  transform: translateX(-50%);
+}
+.ba-handle-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #b6f500;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Sticky section ─── */
+.sticky-storytelling {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ─── Page transition ─── */
+.page-enter {
+  opacity: 0;
+}
+.page-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* ─── Form inputs ─── */
+.ut-input {
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+  color: #000000;
+  border-radius: 1px;
+  padding: 14px 16px;
+  width: 100%;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.ut-input::placeholder {
+  color: #a0a0a0;
+}
+.ut-input:focus {
+  border-color: #b6f500;
+  background: #fff;
+}
+
+/* ─── Pill badge ─── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-inter);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 6px 14px;
+  border: 1px solid #e8e8e8;
+  border-radius: 100px;
+  color: #555;
+}
+.pill-lime {
+  border-color: #b6f500;
+  background: #b6f500;
+  color: #000;
+}
+
+/* ─── Horizontal scroll container ─── */
+.h-scroll-track {
+  display: flex;
+  width: max-content;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-content {
+    animation: none !important;
+  }
+}
