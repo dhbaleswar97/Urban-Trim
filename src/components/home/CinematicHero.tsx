@@ -48,8 +48,17 @@ const TRAIL_IMAGES = [
 
 /* ─── Per-character hover images ──────────────────────────────────────────── */
 
+type CharConfig = {
+  char: string
+  img: string
+  w?: string
+  h?: string
+  xPct?: number
+  yPct?: number
+}
+
 /* "Urban" — 5 chars, 5 images (w/h override in em, falls back to default) */
-const URBAN_CHARS = [
+const URBAN_CHARS: CharConfig[] = [
   { char: 'U', img: `${H}/U-letter.png`, w: '0.70em', h: '0.80em' },
   { char: 'r', img: `${H}/Glossy-R.png` },
   { char: 'b', img: `${H}/Head-1.png` },
@@ -58,7 +67,7 @@ const URBAN_CHARS = [
 ]
 
 /* "Trim" — 4 chars, 4 images */
-const TRIM_CHARS = [
+const TRIM_CHARS: CharConfig[] = [
   { char: 'T', img: `${H}/Glossy-T.png` },
   { char: 'r', img: `${H}/Fur-R.png` },
   { char: 'i', img: `${H}/Head-2.png` },

@@ -12,34 +12,6 @@ const ITEM_W = 138 // px — trail image width
 const ITEM_H = 162 // px — trail image height
 const LIFETIME = 950 // ms — how long each image lives before exit begins
 
-/* ─── Framer Motion variants ────────────────────────────────────────────────── */
-
-const variants = {
-  initial: {
-    scale: 0,
-    opacity: 0,
-    y: 0,
-  },
-  animate: {
-    scale: 1,
-    opacity: 1,
-    y: 0,
-    transition: {
-      scale: { type: 'spring' as const, stiffness: 260, damping: 22, mass: 0.8 },
-      opacity: { duration: 0.2, ease: 'easeOut' },
-    },
-  },
-  exit: {
-    scale: 0.72,
-    opacity: 0,
-    y: -18,
-    transition: {
-      duration: 0.44,
-      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-    },
-  },
-}
-
 /* ─── Types ─────────────────────────────────────────────────────────────────── */
 
 interface TrailItem {
@@ -52,7 +24,7 @@ interface TrailItem {
 
 export interface ImageTrailProps {
   images: string[]
-  containerRef: React.RefObject<HTMLDivElement>
+  containerRef: React.RefObject<HTMLDivElement | null>
   /* px of mouse travel before spawning the next image (default 85) */
   threshold?: number
   /* max images alive at once (default 7) */
@@ -131,10 +103,21 @@ export function ImageTrail({
         {items.map((item) => (
           <motion.div
             key={item.id}
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{
+              scale: 0.72,
+              opacity: 0,
+              y: -18,
+              transition: {
+                duration: 0.44,
+                ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+              },
+            }}
+            transition={{
+              scale: { type: 'spring', stiffness: 260, damping: 22, mass: 0.8 },
+              opacity: { duration: 0.2 },
+            }}
             style={{
               position: 'absolute',
               left: item.x - ITEM_W / 2,
