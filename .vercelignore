@@ -1,3 +1,5 @@
 # Large media assets exceed Vercel's 100 MB source-file limit.
 # Host these on a CDN (Vercel Blob, Cloudinary, S3, etc.) for production.
-public/assets/
+# Fonts are kept — next/font/local reads them at build time.
+public/assets/images/
+public/assets/videos/
