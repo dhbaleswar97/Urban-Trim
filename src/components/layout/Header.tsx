@@ -12,6 +12,7 @@ import {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ArrowUpRight, X } from 'lucide-react'
+import { VID_CDN } from '@/lib/cdn'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -66,7 +67,7 @@ function MagneticLogo() {
           playsInline
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
         >
-          <source src="/assets/videos/Gradient-BG.mp4" type="video/mp4" />
+          <source src={`${VID_CDN}/assets/videos/Gradient-BG.mp4`} type="video/mp4" />
         </video>
         <div
           className="pointer-events-none absolute inset-0"

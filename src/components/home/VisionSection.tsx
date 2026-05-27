@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
+import { IMG_CDN } from '@/lib/cdn'
 
 /*
  * Sticky scroll storytelling — Monof "Our Vision" parity.
@@ -29,7 +30,7 @@ import { gsap, ScrollTrigger } from '@/animations/gsap.config'
  */
 
 const SCROLL_H = 750
-const VISION_IMG = '/assets/images/web-img%20(2).png'
+const VISION_IMG = `${IMG_CDN}/assets/images/web-img%20(2).png`
 
 const PHRASES = ['Cut Different.', 'Craft Above All.', 'Every Line Counts.', 'Built for the Bold.']
 

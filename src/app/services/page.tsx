@@ -13,7 +13,9 @@ import { FAQSection } from '@/components/home/FAQSection'
 
 // ─── WORK SHOWCASE DATA ────────────────────────────────────────────────────────
 
-const G = '/assets/images/Urban-trim-web-Gallery'
+import { IMG_CDN } from '@/lib/cdn'
+
+const G = `${IMG_CDN}/assets/images/Urban-trim-web-Gallery`
 
 const WORKS = [
   {
@@ -394,7 +396,7 @@ function InlineStatsSection() {
             style={{ height: 'clamp(380px, 58vh, 660px)' }}
           >
             <Image
-              src="/assets/images/Background-grid%20(2).jpg"
+              src={`${IMG_CDN}/assets/images/Background-grid%20(2).jpg`}
               fill
               alt="Urban Trim craftsmanship"
               className="object-cover"

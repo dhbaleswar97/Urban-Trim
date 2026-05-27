@@ -5,7 +5,9 @@ import { motion } from 'framer-motion'
 
 // ─── PHOTO DATA ────────────────────────────────────────────────────────────────
 
-const G = '/assets/images/Urban-trim-web-Gallery'
+import { IMG_CDN } from '@/lib/cdn'
+
+const G = `${IMG_CDN}/assets/images/Urban-trim-web-Gallery`
 
 const PHOTOS = [
   {

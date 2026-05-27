@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
+import { VID_CDN } from '@/lib/cdn'
 
 /*
  * Sticky showreel — Monof "Showreel 26" parity.
@@ -34,14 +35,15 @@ import { gsap, ScrollTrigger } from '@/animations/gsap.config'
 const SCROLL_H = 700
 const GRID_INIT_SCALE = 2.65
 
+const V = `${VID_CDN}/assets/videos/Showreel-video`
 const SRC = {
-  topLeft: '/assets/videos/Showreel-video/Top-left-reel.mp4',
-  topRight: '/assets/videos/Showreel-video/Top-right-reel.mp4',
-  centerLeft: '/assets/videos/Showreel-video/Center-left-reel.mp4',
-  center: '/assets/videos/Showreel-video/Center-reel.mp4',
-  centerRight: '/assets/videos/Showreel-video/Center-right-reel.mp4',
-  bottomLeft: '/assets/videos/Showreel-video/Bottom-left-reel.mp4',
-  bottomRight: '/assets/videos/Showreel-video/Bottom-right-reel.mp4',
+  topLeft: `${V}/Top-left-reel.mp4`,
+  topRight: `${V}/Top-right-reel.mp4`,
+  centerLeft: `${V}/Center-left-reel.mp4`,
+  center: `${V}/Center-reel.mp4`,
+  centerRight: `${V}/Center-right-reel.mp4`,
+  bottomLeft: `${V}/Bottom-left-reel.mp4`,
+  bottomRight: `${V}/Bottom-right-reel.mp4`,
 }
 
 interface Cell {

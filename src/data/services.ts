@@ -1,3 +1,8 @@
+import { IMG_CDN } from '@/lib/cdn'
+
+const W = `${IMG_CDN}/assets/images/web-img%20`
+const G = `${IMG_CDN}/assets/images/Urban-trim-web-Gallery`
+
 export interface Service {
   slug: string
   number: string
@@ -25,7 +30,7 @@ export const services: Service[] = [
       'Our Signature Haircut begins with a thorough consultation to understand your hair texture, face shape, and lifestyle. Every cut is executed with razor-sharp precision by our master stylists, finished with professional-grade products that hold and protect.',
     price: 'From $65',
     duration: '60 min',
-    image: '/assets/images/web-img%20(1).jpg',
+    image: `${W}(1).jpg`,
     tags: ['Consultation', 'Precision Cut', 'Style', 'Finish'],
     steps: [
       {
@@ -54,7 +59,7 @@ export const services: Service[] = [
       'Our Beard Sculpting service treats your facial hair as the architectural element it is. Using straight razor, hot towel, and artisan-grade oils, we shape, define, and condition every inch.',
     price: 'From $45',
     duration: '45 min',
-    image: '/assets/images/web-img%20(2).jpg',
+    image: `${W}(2).jpg`,
     tags: ['Shape', 'Line-Up', 'Hot Towel', 'Conditioning'],
     steps: [
       {
@@ -87,7 +92,7 @@ export const services: Service[] = [
       'Our Colour & Highlights service combines technical precision with artistic vision. Sofia Laurent brings her Parisian expertise to every strand, creating natural-looking dimension that photographs beautifully.',
     price: 'From $120',
     duration: '90 min',
-    image: '/assets/images/web-img%20(3).jpg',
+    image: `${W}(3).jpg`,
     tags: ['Consultation', 'Colour', 'Toning', 'Gloss Seal'],
     steps: [
       {
@@ -110,7 +115,7 @@ export const services: Service[] = [
       'The foundation of great hair is a healthy scalp. Our Scalp Treatment protocol analyses your scalp condition and applies targeted treatments to address dryness, sensitivity, buildup, or thinning.',
     price: 'From $80',
     duration: '60 min',
-    image: '/assets/images/web-img%20(4).jpg',
+    image: `${W}(4).jpg`,
     tags: ['Analysis', 'Treatment', 'Massage', 'Mask'],
     steps: [
       { title: 'Scalp Analysis', description: 'Professional scalp scan to identify concerns.' },
@@ -136,7 +141,7 @@ export const services: Service[] = [
       'Whether you need a polished blowout for an important occasion or a textured finish for everyday confidence, our Style & Finish service puts the final polish on your presentation.',
     price: 'From $50',
     duration: '45 min',
-    image: '/assets/images/web-img%20(5).jpg',
+    image: `${W}(5).jpg`,
     tags: ['Wash', 'Blowout', 'Texture', 'Set'],
     steps: [
       {
@@ -162,7 +167,7 @@ export const services: Service[] = [
       'The Royal Shave is our most indulgent service — a multi-step ritual using hot towels, premium lather, a hand-honed straight razor, and restorative balms. It is as much meditation as grooming.',
     price: 'From $55',
     duration: '50 min',
-    image: '/assets/images/Urban-trim-web-Gallery/Salon-Image%20(3).jpg',
+    image: `${G}/Salon-Image%20(3).jpg`,
     tags: ['Steam Towels', 'Straight Razor', 'Lather', 'Balm'],
     steps: [
       { title: 'Steam Prep', description: 'Hot towel wrap opens pores and softens the beard.' },

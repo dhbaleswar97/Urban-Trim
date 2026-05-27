@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
 import { IMAGES } from '@/config/images'
+import { IMG_CDN } from '@/lib/cdn'
 
 /*
  * Cinematic testimonials — Monof-style split-reveal + 3-D card flip.
@@ -45,7 +46,7 @@ interface Testimonial {
   bg?: string
 }
 
-const SPLIT_SRC = '/assets/images/Background-grid%20(12).jpg'
+const SPLIT_SRC = `${IMG_CDN}/assets/images/Background-grid%20(12).jpg`
 
 const TESTIMONIALS: Testimonial[] = [
   {
@@ -53,7 +54,7 @@ const TESTIMONIALS: Testimonial[] = [
       'Marcus understood exactly what I wanted before I even finished explaining. The precision of the fade is unmatched.',
     name: 'Noel Hodge',
     role: 'Creative Director',
-    image: '/assets/images/Teams/Noel%20Hodge.jpg',
+    image: `${IMG_CDN}/assets/images/Teams/Noel%20Hodge.jpg`,
     type: 'text',
   },
   {
@@ -63,7 +64,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: 'Fashion Editor',
     image: IMAGES.testimonials.two,
     type: 'image',
-    bg: '/assets/images/Urban-trim-web-Gallery/Extra-converted/service-thumbnail-image%20(3).jpg',
+    bg: `${IMG_CDN}/assets/images/Urban-trim-web-Gallery/Extra-converted/service-thumbnail-image%20(3).jpg`,
   },
   {
     quote:
@@ -168,7 +169,7 @@ function TextCard({ t, idx }: { t: Testimonial; idx: number }) {
           style={{ minHeight: 80 }}
         >
           <Image
-            src="/assets/images/web-img%20(1).png"
+            src={`${IMG_CDN}/assets/images/web-img%20(1).png`}
             fill
             alt={t.name}
             className="object-cover"

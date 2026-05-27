@@ -1,9 +1,9 @@
-/* All image paths reference local public/ assets — no external URLs */
+import { IMG_CDN } from '@/lib/cdn'
 
-const G = '/assets/images/Urban-trim-web-Gallery'
-const T = '/assets/images/Teams'
-const TS = '/assets/images/Testimonial'
-const W = '/assets/images/web-img%20'
+const G = `${IMG_CDN}/assets/images/Urban-trim-web-Gallery`
+const T = `${IMG_CDN}/assets/images/Teams`
+const TS = `${IMG_CDN}/assets/images/Testimonial`
+const W = `${IMG_CDN}/assets/images/web-img%20`
 
 export const IMAGES = {
   hero: `${W}(1).jpg`,

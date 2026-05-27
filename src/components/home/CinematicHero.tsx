@@ -6,10 +6,11 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
 import { ImageTrail } from '@/components/ui/image-trail'
+import { IMG_CDN } from '@/lib/cdn'
 
 /* ─── Background grid ─────────────────────────────────────────────────────── */
 
-const BASE = '/assets/images/Background-grid%20'
+const BASE = `${IMG_CDN}/assets/images/Background-grid%20`
 const COLS: string[][] = [
   [1, 2, 3, 4, 5, 6, 7].map((n) => `${BASE}(${n}).jpg`),
   [8, 9, 10, 11, 12, 13, 14].map((n) => `${BASE}(${n}).jpg`),
@@ -32,7 +33,7 @@ const SERVICES = [
 
 /* ─── Image trail assets ──────────────────────────────────────────────────── */
 
-const H = '/assets/images/Hero-Text-Hover%20Image'
+const H = `${IMG_CDN}/assets/images/Hero-Text-Hover%20Image`
 
 const TRAIL_IMAGES = [
   `${H}/U-letter.png`,

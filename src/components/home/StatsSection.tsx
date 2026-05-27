@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
 import { IMAGES } from '@/config/images'
+import { IMG_CDN } from '@/lib/cdn'
 
 /*
  * StatsSection — two parts:
@@ -360,7 +361,7 @@ export function StatsSection() {
             style={{ height: 'clamp(380px, 58vh, 660px)' }}
           >
             <Image
-              src="/assets/images/Background-grid%20(2).jpg"
+              src={`${IMG_CDN}/assets/images/Background-grid%20(2).jpg`}
               fill
               alt="Urban Trim craftsmanship"
               className="object-cover"

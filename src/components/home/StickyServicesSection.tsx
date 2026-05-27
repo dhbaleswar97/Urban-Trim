@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useSpring } from 'framer-motion'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
+import { IMG_CDN } from '@/lib/cdn'
 
 /*
  * Stack-card sticky scroll — mirrors the Monof "Work" section.
@@ -34,7 +35,7 @@ const SERVICES = [
     name: 'Signature\nHaircut',
     tagline: 'Architecture for the modern gentleman',
     detail: '60 min  ·  From $65',
-    image: '/assets/images/web-img%20(1).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(1).jpg`,
     href: '/services/signature-haircut',
   },
   {
@@ -42,7 +43,7 @@ const SERVICES = [
     name: 'Beard\nSculpting',
     tagline: 'Define your edge with surgical precision',
     detail: '45 min  ·  From $45',
-    image: '/assets/images/web-img%20(2).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(2).jpg`,
     href: '/services/beard-sculpting',
   },
   {
@@ -50,7 +51,7 @@ const SERVICES = [
     name: 'Colour &\nHighlights',
     tagline: 'Dimensional colour curated for you',
     detail: '90 min  ·  From $120',
-    image: '/assets/images/web-img%20(3).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(3).jpg`,
     href: '/services/colour-highlights',
   },
   {
@@ -58,7 +59,7 @@ const SERVICES = [
     name: 'Scalp\nTreatment',
     tagline: 'Restore, nourish, revitalise',
     detail: '60 min  ·  From $80',
-    image: '/assets/images/web-img%20(4).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(4).jpg`,
     href: '/services/scalp-treatment',
   },
   {
@@ -66,7 +67,7 @@ const SERVICES = [
     name: 'Royal\nShave',
     tagline: 'A ritual passed through generations',
     detail: '50 min  ·  From $55',
-    image: '/assets/images/web-img%20(5).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(5).jpg`,
     href: '/services/royal-shave',
   },
 ]

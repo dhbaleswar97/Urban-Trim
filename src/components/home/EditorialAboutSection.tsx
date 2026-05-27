@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
+import { IMG_CDN, VID_CDN } from '@/lib/cdn'
 
 /*
  * Layout: section = 120vh (fixed)
@@ -24,11 +25,12 @@ import { ArrowUpRight } from 'lucide-react'
  *   └────────────────────────────────────────────────┘
  */
 
+const T = `${IMG_CDN}/assets/images/Teams`
 const TEAM_IMGS = [
-  '/assets/images/Teams/Stefan%20Stefancik.jpg',
-  '/assets/images/Teams/Isaiah%20Beltran.jpg',
-  '/assets/images/Teams/Lucian%20Huerta.jpg',
-  '/assets/images/Teams/Daisy%20Hawkins.jpg',
+  `${T}/Stefan%20Stefancik.jpg`,
+  `${T}/Isaiah%20Beltran.jpg`,
+  `${T}/Lucian%20Huerta.jpg`,
+  `${T}/Daisy%20Hawkins.jpg`,
 ]
 
 function DotGrid() {
@@ -282,7 +284,7 @@ export function EditorialAboutSection() {
               className="absolute inset-0 h-full w-full object-cover"
               aria-hidden="true"
             >
-              <source src="/assets/videos/Gradient-BG.mp4" type="video/mp4" />
+              <source src={`${VID_CDN}/assets/videos/Gradient-BG.mp4`} type="video/mp4" />
             </video>
 
             {/* Blue/black gradient overlay */}
@@ -331,7 +333,7 @@ export function EditorialAboutSection() {
                   <div className="flex items-end gap-[8px]">
                     <div className="h-[28px] w-[28px] shrink-0 overflow-hidden rounded-full border border-black/10">
                       <Image
-                        src="/assets/images/Testimonial/Hassan-khan.jpg"
+                        src={`${IMG_CDN}/assets/images/Testimonial/Hassan-khan.jpg`}
                         alt="client"
                         width={28}
                         height={28}
@@ -370,7 +372,7 @@ export function EditorialAboutSection() {
                         className="h-full w-full scale-110 object-cover"
                         aria-hidden="true"
                       >
-                        <source src="/assets/videos/Gradient-BG.mp4" type="video/mp4" />
+                        <source src={`${VID_CDN}/assets/videos/Gradient-BG.mp4`} type="video/mp4" />
                       </video>
                     </div>
                   </div>
@@ -381,7 +383,7 @@ export function EditorialAboutSection() {
                   <div className="flex items-end gap-[8px]">
                     <div className="h-[28px] w-[28px] shrink-0 overflow-hidden rounded-full border border-black/10">
                       <Image
-                        src="/assets/images/Testimonial/Hassan-khan.jpg"
+                        src={`${IMG_CDN}/assets/images/Testimonial/Hassan-khan.jpg`}
                         alt="client"
                         width={28}
                         height={28}

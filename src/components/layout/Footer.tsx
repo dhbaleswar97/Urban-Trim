@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { IMG_CDN } from '@/lib/cdn'
 
 /* ─── Nav pages ──────────────────────────────────────────────────────── */
 
@@ -39,7 +40,7 @@ export function Footer() {
       <section className="relative overflow-hidden" style={{ minHeight: 520 }}>
         {/* Background image */}
         <Image
-          src="/assets/images/Background-grid%20(10).jpg"
+          src={`${IMG_CDN}/assets/images/Background-grid%20(10).jpg`}
           fill
           alt=""
           className="object-cover"

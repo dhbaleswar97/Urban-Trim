@@ -8,6 +8,7 @@ import { gsap } from '@/animations/gsap.config'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { team } from '@/data/team'
 import { IMAGES } from '@/config/images'
+import { IMG_CDN } from '@/lib/cdn'
 
 // ─── SVG PARTNER MARKS ────────────────────────────────────────────────────────
 
@@ -306,7 +307,7 @@ export default function AboutPage() {
             style={{ inset: '-12% 0', willChange: 'transform' }}
           >
             <Image
-              src="/assets/images/Background-grid%20(3).jpg"
+              src={`${IMG_CDN}/assets/images/Background-grid%20(3).jpg`}
               alt=""
               fill
               priority
@@ -510,7 +511,7 @@ export default function AboutPage() {
               transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
               <Image
-                src="/assets/images/web-img%20(2).jpg"
+                src={`${IMG_CDN}/assets/images/web-img%20(2).jpg`}
                 alt="Urban Trim craftsmanship"
                 fill
                 className="object-cover"
@@ -526,7 +527,7 @@ export default function AboutPage() {
               transition={{ duration: 0.85, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
             >
               <Image
-                src="/assets/images/web-img%20(3).jpg"
+                src={`${IMG_CDN}/assets/images/web-img%20(3).jpg`}
                 alt="Urban Trim artistry"
                 fill
                 className="object-cover"
@@ -601,7 +602,7 @@ export default function AboutPage() {
             transition={{ duration: 0.85, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
-              src="/assets/images/Background-grid%20(2).jpg"
+              src={`${IMG_CDN}/assets/images/Background-grid%20(2).jpg`}
               alt="Urban Trim craftsmanship"
               fill
               className="object-cover"

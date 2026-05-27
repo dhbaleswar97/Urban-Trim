@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
+import { IMG_CDN } from '@/lib/cdn'
 
 // ─── DATA ──────────────────────────────────────────────────────────────────────
 
@@ -141,7 +142,7 @@ export default function ContactPage() {
             >
               {/* Portrait photo */}
               <Image
-                src="/assets/images/Testimonial/Houcine.jpg"
+                src={`${IMG_CDN}/assets/images/Testimonial/Houcine.jpg`}
                 alt="Urban Trim client"
                 fill
                 className="object-cover object-center opacity-65"

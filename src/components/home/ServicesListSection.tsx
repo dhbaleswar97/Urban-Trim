@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
+import { IMG_CDN } from '@/lib/cdn'
 
 /*
  * Sticky services list — mirrors Monof "Services" section.
@@ -23,35 +24,35 @@ const SERVICES = [
     name: 'Signature Haircut',
     description:
       'Architecture for the modern gentleman — a precise execution from root to fade, crafted for lasting impact.',
-    image: '/assets/images/web-img%20(1).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(1).jpg`,
   },
   {
     number: '002',
     name: 'Beard Sculpting',
     description:
       'Define your edge with surgical precision. Shape, trim and groom for maximum, enduring effect.',
-    image: '/assets/images/web-img%20(2).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(2).jpg`,
   },
   {
     number: '003',
     name: 'Colour & Highlights',
     description:
       'Dimensional colour curated exclusively for you — tones that feel natural, striking, and alive.',
-    image: '/assets/images/web-img%20(3).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(3).jpg`,
   },
   {
     number: '004',
     name: 'Scalp Treatment',
     description:
       'Restore, nourish, revitalise. A clinical approach to scalp health with premium formulations.',
-    image: '/assets/images/web-img%20(4).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(4).jpg`,
   },
   {
     number: '005',
     name: 'Royal Shave',
     description:
       'A ritual passed through generations. Hot towel, straight razor — the art of a flawless finish.',
-    image: '/assets/images/web-img%20(5).jpg',
+    image: `${IMG_CDN}/assets/images/web-img%20(5).jpg`,
   },
 ]
 
