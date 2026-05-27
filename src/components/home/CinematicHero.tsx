@@ -5,35 +5,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { gsap, ScrollTrigger } from '@/animations/gsap.config'
+import { ImageTrail } from '@/components/ui/image-trail'
 
-/*
- * 2 columns × 7 images each (all 14 local assets), doubled → 14 per
- * column for a seamless infinite loop.
- *
- * Filenames contain spaces → paths are URL-encoded (%20).
- *
- * yPercent loop math (each col):
- *   Strip = 14 images + 13 gaps (doubled set).
- *   Δ = ±50 % of strip height = exactly one set of 7 → seamless.
- *     Col 0 (up):   -10 → -60  (Δ = -50)
- *     Col 1 (down): -55 → -5   (Δ = +50)
- */
+/* ─── Background grid ─────────────────────────────────────────────────────── */
 
 const BASE = '/assets/images/Background-grid%20'
-
 const COLS: string[][] = [
-  /* Column 0 (LEFT) — images 1–7, scrolls upward */
   [1, 2, 3, 4, 5, 6, 7].map((n) => `${BASE}(${n}).jpg`),
-  /* Column 1 (RIGHT) — images 8–14, scrolls downward */
   [8, 9, 10, 11, 12, 13, 14].map((n) => `${BASE}(${n}).jpg`),
 ]
-
-/* Render height per column (px). Width fills the flex-1 column. */
 const COL_IMG_H = [340, 396]
-
 const FROM_Y = [-10, -55]
 const TO_Y = [-60, -5]
 const DUR = [52, 65]
+
+/* ─── Services sidebar ────────────────────────────────────────────────────── */
 
 const SERVICES = [
   'Signature Haircut',
@@ -43,6 +29,185 @@ const SERVICES = [
   'Scalp Treatment',
   'Royal Shave',
 ]
+
+/* ─── Image trail assets ──────────────────────────────────────────────────── */
+
+const H = '/assets/images/Hero-Text-Hover%20Image'
+
+const TRAIL_IMAGES = [
+  `${H}/U-letter.png`,
+  `${H}/Glossy-R.png`,
+  `${H}/Head-1.png`,
+  `${H}/A%20Baloon%20text.png`,
+  `${H}/N%20Baloon%20text.png`,
+  `${H}/Glossy-T.png`,
+  `${H}/Fur-R.png`,
+  `${H}/Head-2.png`,
+  `${H}/M-lettes.png`,
+]
+
+/* ─── Per-character hover images ──────────────────────────────────────────── */
+
+/* "Urban" — 5 chars, 5 images (w/h override in em, falls back to default) */
+const URBAN_CHARS = [
+  { char: 'U', img: `${H}/U-letter.png`, w: '0.70em', h: '0.80em' },
+  { char: 'r', img: `${H}/Glossy-R.png` },
+  { char: 'b', img: `${H}/Head-1.png` },
+  { char: 'a', img: `${H}/A%20Baloon%20text.png` },
+  { char: 'n', img: `${H}/N%20Baloon%20text.png`, w: '1.20em' },
+]
+
+/* "Trim" — 4 chars, 4 images */
+const TRIM_CHARS = [
+  { char: 'T', img: `${H}/Glossy-T.png` },
+  { char: 'r', img: `${H}/Fur-R.png` },
+  { char: 'i', img: `${H}/Head-2.png` },
+  { char: 'm', img: `${H}/M-lettes.png` },
+]
+
+/* ─── HeroChar ────────────────────────────────────────────────────────────── */
+/*
+ * Each character:
+ *   - letterRef  : the text span (scales/rotates out on enter, back in on leave)
+ *   - imgWrapRef : absolutely overlays the letter space (scales/rotates in)
+ *
+ * GSAP timeline is killed + rebuilt on every enter/leave so rapid
+ * hovers never stack or glitch.
+ */
+
+function HeroChar({
+  char,
+  img,
+  w = '0.92em',
+  h = '1.10em',
+  xPct = -50,
+  yPct = -50,
+}: {
+  char: string
+  img: string
+  w?: string
+  h?: string
+  xPct?: number
+  yPct?: number
+}) {
+  const letterRef = useRef<HTMLSpanElement>(null)
+  const imgWrapRef = useRef<HTMLSpanElement>(null)
+  const tl = useRef<gsap.core.Timeline | null>(null)
+
+  useEffect(() => {
+    /* Set initial hidden state — xPercent/yPercent centers the fixed-size
+       overlay on the character without conflicting with scale/rotation */
+    if (imgWrapRef.current) {
+      gsap.set(imgWrapRef.current, {
+        xPercent: xPct,
+        yPercent: yPct,
+        scale: 0,
+        rotation: -180,
+        opacity: 0,
+        transformOrigin: 'center center',
+      })
+    }
+    if (letterRef.current) {
+      gsap.set(letterRef.current, { transformOrigin: 'center center' })
+    }
+    return () => {
+      tl.current?.kill()
+    }
+  }, [])
+
+  const onEnter = () => {
+    if (!letterRef.current || !imgWrapRef.current) return
+    tl.current?.kill()
+    tl.current = gsap
+      .timeline()
+      /* Letter spins out — fast shutter */
+      .to(letterRef.current, {
+        scale: 0,
+        rotation: 180,
+        opacity: 0,
+        duration: 0.14,
+        ease: 'power4.in',
+      })
+      /* Image pops in with overshoot — cinematic reveal */
+      .fromTo(
+        imgWrapRef.current,
+        { scale: 0, rotation: -180, opacity: 0 },
+        {
+          scale: 1,
+          rotation: 0,
+          opacity: 1,
+          duration: 0.4,
+          ease: 'back.out(1.8)',
+        },
+        '-=0.04'
+      )
+  }
+
+  const onLeave = () => {
+    if (!letterRef.current || !imgWrapRef.current) return
+    tl.current?.kill()
+    tl.current = gsap
+      .timeline()
+      /* Image spins out — mirror shutter */
+      .to(imgWrapRef.current, {
+        scale: 0,
+        rotation: 180,
+        opacity: 0,
+        duration: 0.14,
+        ease: 'power4.in',
+      })
+      /* Letter returns with spring */
+      .fromTo(
+        letterRef.current,
+        { scale: 0, rotation: -180, opacity: 0 },
+        {
+          scale: 1,
+          rotation: 0,
+          opacity: 1,
+          duration: 0.38,
+          ease: 'back.out(1.35)',
+        },
+        '-=0.04'
+      )
+  }
+
+  return (
+    <span
+      style={{ position: 'relative', display: 'inline-block', cursor: 'default' }}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+    >
+      {/* Visible letter */}
+      <span ref={letterRef} style={{ display: 'inline-block' }}>
+        {char}
+      </span>
+
+      {/* Image overlay — fixed size matching T's bounding box, centered on
+          each character regardless of its individual advance width.
+          top/left: 50% puts the corner at centre; GSAP xPercent/yPercent
+          then shifts it back by half its own dimensions. */}
+      <span
+        ref={imgWrapRef}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: w,
+          height: h,
+          display: 'block',
+          overflow: 'hidden',
+          borderRadius: '6px',
+          pointerEvents: 'none',
+          zIndex: 2,
+        }}
+      >
+        <Image src={img} alt="" fill className="object-contain" sizes="18vw" />
+      </span>
+    </span>
+  )
+}
+
+/* ─── CinematicHero ───────────────────────────────────────────────────────── */
 
 export function CinematicHero() {
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -59,24 +224,11 @@ export function CinematicHero() {
         gsap.fromTo(
           inner,
           { yPercent: FROM_Y[i] },
-          {
-            yPercent: TO_Y[i],
-            duration: DUR[i],
-            repeat: -1,
-            ease: 'linear',
-          }
+          { yPercent: TO_Y[i], duration: DUR[i], repeat: -1, ease: 'linear' }
         )
       })
 
-      /*
-       * ── Hero panel: aggressive scale-down, zero border-radius ──
-       *
-       * Wrapper is 400vh. The sticky child pins for 300vh of scroll
-       * (400vh − 100vh viewport). Over that distance the panel shrinks
-       * from scale(1) → scale(0.54), exposing the grid on all sides.
-       *
-       * scrub: 2.5 gives the smooth "cinematic lag" feel.
-       */
+      /* ── Hero panel cinematic scale-shrink on scroll ── */
       gsap.to(heroPanelRef.current, {
         scale: 0.54,
         ease: 'none',
@@ -94,18 +246,11 @@ export function CinematicHero() {
   }, [])
 
   return (
-    /*
-     * 400vh wrapper → 300vh of usable scroll animation budget.
-     * The sticky inner div stays glued to top: 0 throughout.
-     */
     <div ref={wrapperRef} style={{ height: '400vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* ══════════════════════════════════════════════════
-            BACKGROUND — 2-column large image grid
-            Fixed column widths: 612.28 px each
-            Image heights: 340.15 px (left) / 396.85 px (right)
-            Gap: 2rem between columns and between every image item
-        ══════════════════════════════════════════════════ */}
+        {/* ══════════════════════════════════════════
+            BACKGROUND — 2-column scrolling image grid
+        ══════════════════════════════════════════ */}
         <div className="absolute inset-0 z-0 flex items-start" style={{ gap: '4rem' }}>
           {COLS.map((col, ci) => (
             <div key={ci} style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
@@ -142,20 +287,22 @@ export function CinematicHero() {
           ))}
         </div>
 
-        {/* ══════════════════════════════════════════════════
-            HERO PANEL — white card, GSAP scales to 0.54
-            origin-center keeps it centered as it shrinks.
-            No border-radius — stays sharp-edged throughout.
-        ══════════════════════════════════════════════════ */}
+        {/* ══════════════════════════════════════════
+            HERO PANEL — white card, scales to 0.54
+        ══════════════════════════════════════════ */}
         <div
           ref={heroPanelRef}
           className="absolute inset-0 z-10 origin-center bg-white"
           style={{ willChange: 'transform' }}
         >
-          <div className="relative flex h-full flex-col overflow-hidden">
-            {/* Body: left sidebar + right content */}
+          {/* ── Ambient image trail — z-[1], behind all content ── */}
+          <ImageTrail images={TRAIL_IMAGES} containerRef={heroPanelRef} />
+
+          {/* ── Hero content — z-[2], always above trail ── */}
+          <div className="relative z-[2] flex h-full flex-col">
+            {/* Header row: sidebar + tagline */}
             <div className="flex flex-1 pt-[72px]">
-              {/* Left sidebar — service list */}
+              {/* Left — service list */}
               <motion.aside
                 className="hidden shrink-0 flex-col justify-start pt-10 md:flex"
                 style={{
@@ -180,7 +327,7 @@ export function CinematicHero() {
                 ))}
               </motion.aside>
 
-              {/* Right — tagline + pill CTA */}
+              {/* Right — tagline + CTA */}
               <div className="relative flex-1">
                 <motion.div
                   className="absolute top-8 right-8 max-w-[270px] text-right lg:right-16"
@@ -203,9 +350,10 @@ export function CinematicHero() {
               </div>
             </div>
 
-            {/* Bottom giant type */}
+            {/* ── Giant headline — split per character ── */}
             <div className="flex shrink-0 items-end justify-between px-4 leading-none lg:px-8">
-              <div className="overflow-hidden">
+              {/* "Urban" */}
+              <div style={{ clipPath: 'inset(0 -50vw)' }}>
                 <motion.h1
                   className="font-body block font-black"
                   style={{
@@ -217,10 +365,14 @@ export function CinematicHero() {
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  Urban
+                  {URBAN_CHARS.map(({ char, img, w, h }, i) => (
+                    <HeroChar key={i} char={char} img={img} w={w} h={h} />
+                  ))}
                 </motion.h1>
               </div>
-              <div className="overflow-hidden">
+
+              {/* "Trim" */}
+              <div style={{ clipPath: 'inset(0 -50vw)' }}>
                 <motion.h1
                   className="font-body block font-black"
                   style={{
@@ -232,19 +384,18 @@ export function CinematicHero() {
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  Trim
+                  {TRIM_CHARS.map(({ char, img, xPct, yPct }, i) => (
+                    <HeroChar key={i} char={char} img={img} xPct={xPct} yPct={yPct} />
+                  ))}
                 </motion.h1>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ══════════════════════════════════════════════════
-            SCROLL INDICATOR — z-[5]: sits between the image
-            grid (z-0) and the hero panel (z-10).
-            The hero panel itself masks it when full-screen;
-            as it scales down the bottom strip reveals this badge.
-        ══════════════════════════════════════════════════ */}
+        {/* ══════════════════════════════════════════
+            SCROLL INDICATOR — between grid and panel
+        ══════════════════════════════════════════ */}
         <div className="pointer-events-none absolute bottom-8 left-1/2 z-[5] -translate-x-1/2">
           <motion.div
             animate={{ y: [0, -9, 0] }}

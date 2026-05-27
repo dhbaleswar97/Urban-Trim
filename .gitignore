@@ -42,6 +42,3 @@ next-env.d.ts
 
 # claude code
 .claude/
-
-# large media assets — host on CDN for production
-/public/assets/
